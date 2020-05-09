@@ -73,7 +73,6 @@ class HomePage extends React.Component {
           </Col>
         </Row>
 
-        <hr className="divider bg-transparent" />
       </Container>
     )
   }

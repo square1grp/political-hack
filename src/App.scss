@@ -14,7 +14,7 @@ body {
 }
 
 *[class*="feature-mockup-"] {
-  min-height: 250px;
+  min-height: 350px;
   background-color: #270262;
 
   &.bg-gray {
@@ -22,10 +22,22 @@ body {
   }
 
   &.feature-mockup-one {
-    height: 600px;
+    height: 750px;
   }
 
   &.feature-mockup-five {
-    height: 500px;
+    height: 600px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .xl-four-sevenths {
+    flex: 0 0 57.142858%;
+    max-width: 57.142858%;
+  }
+
+  .xl-three-sevenths {
+    flex: 0 0 42.857143%;
+    max-width: 42.857143%;
   }
 }

@@ -13,12 +13,16 @@ export default function authReducer(state = initialState, action) {
           lastname: "Doe",
           hometown: "Los Angeles",
           state: "CA",
-          disctrict: "",
+          disctrict: null,
           birthday: "Jan 1, 2000",
-          party: "",
-          tenur: "",
+          party: null,
+          tenur: null,
           gender: "Female",
-          occupation: ""
+          occupation: null,
+          headquarters: null,
+          party_percent: null,
+          industry: null,
+          org_type: "Corp"
         }
       }
     default:

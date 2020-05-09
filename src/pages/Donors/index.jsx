@@ -1,16 +1,17 @@
 import React from 'react'
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import { UserInfo } from '../../components'
-import politiciansImgSrc from '../../assets/images/politicians-img.png'
+import donorsImgSrc from '../../assets/images/donors-img.png'
 import './style.scss'
 
-class Politicians extends React.Component {
+
+class Donors extends React.Component {
   render() {
     return (
-      <Container fluid className="politicians-page">
+      <Container fluid className="donors-page">
         <Row>
           <Col className="text-center my-5" lg={{ span: 6, offset: 3 }}>
-            <Image src={politiciansImgSrc} fluid />
+            <Image src={donorsImgSrc} fluid />
           </Col>
         </Row>
 
@@ -18,7 +19,7 @@ class Politicians extends React.Component {
           <Col lg={{ span: 10, offset: 1 }}>
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
-                <UserInfo type="politicians" />
+                <UserInfo type="donors" />
                 <div className="rounded feature-mockup-two bg-gray my-4" />
                 <div className="rounded feature-mockup-six" />
               </Col>
@@ -47,4 +48,4 @@ class Politicians extends React.Component {
   }
 }
 
-export default Politicians;
+export default Donors;
