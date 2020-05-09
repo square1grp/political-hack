@@ -2,7 +2,12 @@ import * as React from 'react'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
 import { Header } from '../components'
-import { BrowsePage, PoliticiansPage, DonorsPage } from '../pages'
+import {
+  BrowsePage,
+  PoliticiansPage,
+  DonorsPage,
+  LawsPage
+} from '../pages'
 
 class RoutedApplication extends React.Component {
   render() {
@@ -17,10 +22,12 @@ class RoutedApplication extends React.Component {
           <Route path='/politicians' component={PoliticiansPage} />
 
           <Route path='/donors' component={DonorsPage} />
+
+          <Route path='/laws' component={LawsPage} />
         </Switch>
 
         <footer className="py-5">
-          <p className="text-center"><small>Copyright © 2020 Political Hack, All Rights Reserved.</small></p>
+          <p className="text-center my-0"><small>Copyright © 2020 Political Hack - All Rights Reserved.</small></p>
         </footer>
 
       </ConnectedRouter>

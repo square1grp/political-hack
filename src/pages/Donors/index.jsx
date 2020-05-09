@@ -20,8 +20,8 @@ class Donors extends React.Component {
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
                 <UserInfo type="donors" />
-                <div className="rounded feature-mockup-two bg-gray my-4" />
-                <div className="rounded feature-mockup-six" />
+                <div className="rounded feature-mockup-two bg-gray mb-4" />
+                <div className="rounded feature-mockup-six mb-4" />
               </Col>
 
               <Col xs={12} lg={7}>
@@ -32,11 +32,11 @@ class Donors extends React.Component {
 
                   <Col xs={12} lg={4} className="xl-three-sevenths">
                     <div className="rounded feature-mockup-three bg-gray mb-4" />
-                    <div className="rounded feature-mockup-four" />
+                    <div className="rounded feature-mockup-four mb-4" />
                   </Col>
 
                   <Col xs={12}>
-                    <div className="rounded feature-mockup-five bg-gray" />
+                    <div className="rounded feature-mockup-five bg-gray mb-4" />
                   </Col>
                 </Row>
               </Col>

@@ -22,7 +22,8 @@ export default function authReducer(state = initialState, action) {
           headquarters: null,
           party_percent: null,
           industry: null,
-          org_type: "Corp"
+          org_type: "Corp",
+          comments: null
         }
       }
     default:

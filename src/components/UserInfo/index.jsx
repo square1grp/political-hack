@@ -16,7 +16,6 @@ class UserInfo extends React.Component {
     switch (type) {
       case "politicians":
         return <>
-          <h4 className="text-center">{user.firstname} {user.lastname}</h4>
           <h5>Hometown: {user.hometown}</h5>
           <h5>State: {user.state} District: {user.district}</h5>
           <h5>DOB: {user.birthday}</h5>
@@ -28,7 +27,6 @@ class UserInfo extends React.Component {
 
       case "donors":
         return <>
-          <h4 className="text-center">{user.firstname} {user.lastname}</h4>
           <h5>HeadQuaters: {user.headquarters}</h5>
           <h5>State: {user.state} District: {user.district}</h5>
           <h5>DOB: {user.birthday}</h5>
@@ -37,6 +35,11 @@ class UserInfo extends React.Component {
           <h5>Industry: {user.industry}</h5>
           <h5>Org Type: {user.org_type}</h5>
         </>
+
+      case "laws":
+        return <>
+          <h5>Comments: {user.comments}</h5>
+        </>
     }
   }
 
@@ -44,12 +47,13 @@ class UserInfo extends React.Component {
     const { user, type } = this.props
 
     return (
-      <Row className="user-info rounded mx-auto">
+      <Row className="user-info rounded mx-auto mb-4">
         <Col xs={12} className="px-lg-4">
           {user ? (
             <>
               <Image className="mb-3 headshot" src={headshotImgSrc} fluid />
 
+              <h4 className="text-center">{user.firstname} {user.lastname}</h4>
               {this.renderUserInfo(type)}
             </>
           ) : <React.Fragment />}
