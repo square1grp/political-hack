@@ -37,7 +37,7 @@ class Header extends React.Component {
             <Col><Link to="/laws" className="my-1 btn link-to-laws w-100">Laws</Link></Col>
             <Col><Link to="/issues" className="my-1 btn link-to-issues w-100">Issues</Link></Col>
             <Col><Link to="/investigate" className="my-1 btn link-to-investigate w-100">Investigate</Link></Col>
-            <Col><Link to="/blog" className="my-1 btn link-to-blog w-100">Blog</Link></Col>
+            <Col><Link to="/blogs" className="my-1 btn link-to-blog w-100">Blogs</Link></Col>
             <Col><Link to="/about-us" className="my-1 btn link-to-aboutus w-100">About Us</Link></Col>
           </Row>
         </Container>

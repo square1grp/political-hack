@@ -7,7 +7,7 @@ import issuesImgSrc from '../../assets/images/issues-img.png'
 class Issues extends React.Component {
   render() {
     return (
-      <Container fluid className="laws-page">
+      <Container fluid className="issues-page">
         <Row>
           <Col className="text-center my-5" lg={{ span: 6, offset: 3 }}>
             <Image src={issuesImgSrc} fluid />
