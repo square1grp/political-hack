@@ -59,7 +59,7 @@ class HomePage extends React.Component {
         <hr className="divider bg-transparent" />
 
         <Row>
-          <Col className="mb-3">
+          <Col xs={12} className="mb-3">
             <h3>Search for politicians, laws, PACs, issues, etc:</h3>
           </Col>
 
