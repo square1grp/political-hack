@@ -1,0 +1,42 @@
+a[class*="link-to-"] {
+  color: #ffffff;
+  background-color: #000000;
+  border: 2px solid #808080;
+  min-width: 100px;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.link-to-search {
+    color: #63fd4b;
+    border: 2px solid #e6e6e6;
+  }
+
+  &.link-to-login {
+    color: #8c64cc;
+  }
+
+  &.link-to-browse,
+  &.link-to-issues,
+  &.link-to-aboutus {
+    color: #ff0000;
+  }
+
+  &.link-to-politicians,
+  &.link-to-laws,
+  &.link-to-investigate {
+    color: #5282fa;
+  }
+}
+
+.banner {
+  background-image: url("../../assets/images/banner-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 540px;
+
+  .text {
+    background-color: rgba(#000000, 0.7);
+  }
+}
