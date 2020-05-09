@@ -40,6 +40,9 @@ class UserInfo extends React.Component {
         return <>
           <h5>Comments: {user.comments}</h5>
         </>
+
+      default:
+        return <></>
     }
   }
 

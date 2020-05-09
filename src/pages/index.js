@@ -3,6 +3,7 @@ import PoliticiansPage from './Politicians'
 import DonorsPage from './Donors'
 import LawsPage from './Laws'
 import IssuesPage from './Issues'
+import InvestigatePage from './Investigate'
 import BlogsPage from './Blogs'
 import AboutUsPage from './AboutUs'
 
@@ -13,5 +14,6 @@ export {
   LawsPage,
   IssuesPage,
   BlogsPage,
-  AboutUsPage
+  AboutUsPage,
+  InvestigatePage
 };

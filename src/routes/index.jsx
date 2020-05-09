@@ -8,6 +8,7 @@ import {
   DonorsPage,
   LawsPage,
   IssuesPage,
+  InvestigatePage,
   BlogsPage,
   AboutUsPage
 } from '../pages'
@@ -29,6 +30,8 @@ class RoutedApplication extends React.Component {
           <Route path='/laws' component={LawsPage} />
 
           <Route path='/issues' component={IssuesPage} />
+
+          <Route path='/investigate' component={InvestigatePage} />
 
           <Route path='/blogs' component={BlogsPage} />
 

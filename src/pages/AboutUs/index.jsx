@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Image } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 
 class AboutUs extends React.Component {
   render() {
@@ -7,7 +7,7 @@ class AboutUs extends React.Component {
       <Container className="about-us-page">
         <Row>
           <Col xs={12} lg={6}>
-            <iframe width="100%" height="100%" frameborder="0" allowtransparency="true" src="https://www.surveymonkey.com/r/K9ZVQG5?embedded=1"></iframe>
+            <iframe title="survey monkey" width="100%" height="100%" frameborder="0" allowtransparency="true" src="https://www.surveymonkey.com/r/K9ZVQG5?embedded=1"></iframe>
           </Col>
 
           <Col xs={12} lg={6}>
