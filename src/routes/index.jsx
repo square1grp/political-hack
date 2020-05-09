@@ -6,7 +6,8 @@ import {
   BrowsePage,
   PoliticiansPage,
   DonorsPage,
-  LawsPage
+  LawsPage,
+  IssuesPage
 } from '../pages'
 
 class RoutedApplication extends React.Component {
@@ -24,6 +25,8 @@ class RoutedApplication extends React.Component {
           <Route path='/donors' component={DonorsPage} />
 
           <Route path='/laws' component={LawsPage} />
+
+          <Route path='/issues' component={IssuesPage} />
         </Switch>
 
         <footer className="py-5">
