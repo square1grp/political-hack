@@ -4,6 +4,7 @@ import DonorsPage from './Donors'
 import LawsPage from './Laws'
 import IssuesPage from './Issues'
 import BlogsPage from './Blogs'
+import AboutUsPage from './AboutUs'
 
 export {
   BrowsePage,
@@ -11,5 +12,6 @@ export {
   DonorsPage,
   LawsPage,
   IssuesPage,
-  BlogsPage
+  BlogsPage,
+  AboutUsPage
 };

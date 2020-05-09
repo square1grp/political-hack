@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Image, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Container, Row, Col, Image } from 'react-bootstrap'
 import medicationsImgSrc from '../../assets/images/medications.jpg'
 import peopleImgSrc from '../../assets/images/people.jpg'
 import unitedstatesImgSrc from '../../assets/images/united-states.png'
