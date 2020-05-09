@@ -1,0 +1,13 @@
+.politicians-page {
+  @media screen and (min-width: 1200px) {
+    .four-sevenths {
+      flex: 0 0 57.142858%;
+      max-width: 57.142858%;
+    }
+
+    .three-sevenths {
+      flex: 0 0 42.857143%;
+      max-width: 42.857143%;
+    }
+  }
+}

@@ -12,3 +12,20 @@ body {
 .bg-transparent {
   background-color: transparent;
 }
+
+*[class*="feature-mockup-"] {
+  min-height: 250px;
+  background-color: #270262;
+
+  &.bg-gray {
+    background-color: #303030;
+  }
+
+  &.feature-mockup-one {
+    height: 600px;
+  }
+
+  &.feature-mockup-five {
+    height: 500px;
+  }
+}

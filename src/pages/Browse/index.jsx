@@ -24,7 +24,7 @@ class HomePage extends React.Component {
           </Col>
 
           <Col md={6}>
-            <Image className="w-100" src={pepleImgSrc} />
+            <Image src={pepleImgSrc} fluid />
           </Col>
         </Row>
 
@@ -38,7 +38,7 @@ class HomePage extends React.Component {
           </Col>
 
           <Col md={6}>
-            <Image className="w-100" src={bankImgSrc} />
+            <Image src={bankImgSrc} fluid />
           </Col>
         </Row>
 
@@ -52,7 +52,7 @@ class HomePage extends React.Component {
           </Col>
 
           <Col md={6}>
-            <Image className="w-100" src={lawImgSrc} />
+            <Image src={lawImgSrc} fluid />
           </Col>
         </Row>
 
