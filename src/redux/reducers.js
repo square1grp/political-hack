@@ -1,8 +1,10 @@
 import { combineReducers } from "redux"
 import { connectRouter } from "connected-react-router"
 import Auth from './auth/reducer'
+import Visualization from './visualization/reducer'
 
 export default (history) => combineReducers({
   router: connectRouter(history),
   Auth,
+  Visualization
 });
