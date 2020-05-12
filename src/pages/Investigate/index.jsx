@@ -1,5 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import { SampleVisualization } from '../../components'
+import './style.scss'
 
 class Investigate extends React.Component {
   render() {
@@ -8,30 +10,32 @@ class Investigate extends React.Component {
         <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={3}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <SampleVisualization height={350} bgColor="#270262" blank={true} />
           </Col>
           <Col xs={12} lg={4}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <SampleVisualization height={350} bgColor="#303030" blank={true} />
           </Col>
           <Col xs={12} lg={3}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <SampleVisualization height={350} bgColor="#270262" blank={true} />
           </Col>
         </Row>
 
         <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={10}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <div className="filter-options mb-4 py-3 rounded">
+              <h3 className="text-center my-0">Filters</h3>
+            </div>
           </Col>
         </Row>
 
         <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={3}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <SampleVisualization height={600} bgColor="#303030" blank={true} />
           </Col>
           <Col xs={12} lg={7}>
-            <div className="rounded feature-mockup-four mb-4" />
+            <SampleVisualization height={500} bgColor="#270262" blank={true} />
           </Col>
         </Row>
       </Container>

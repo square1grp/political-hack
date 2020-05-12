@@ -13,26 +13,22 @@ class Politicians extends React.Component {
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
                 <UserInfo type="politicians" />
                 <SampleVisualization height={350} bgColor="#303030" />
-                <div className="rounded feature-mockup-four mb-4" />
+                <SampleVisualization height={350} bgColor="#270262" />
               </Col>
 
               <Col xs={12} lg={7}>
                 <Row>
                   <Col xs={12} lg={8} className="xl-four-sevenths">
-                    <div className="rounded feature-mockup-one mb-4" />
-                    {/* <SampleVisualization height={750} /> */}
+                    <SampleVisualization height={750} bgColor="#270262" blank={true} />
                   </Col>
 
                   <Col xs={12} lg={4} className="xl-three-sevenths">
-                    <div className="rounded feature-mockup-three bg-gray mb-4" />
-                    <div className="rounded feature-mockup-four mb-4" />
-                    {/* <SampleVisualization height={350} />
-                    <SampleVisualization height={350} /> */}
+                    <SampleVisualization height={350} bgColor="#303030" blank={true} />
+                    <SampleVisualization height={350} bgColor="#270262" blank={true} />
                   </Col>
 
                   <Col xs={12}>
-                    <div className="rounded feature-mockup-five bg-gray mb-4" />
-                    {/* <SampleVisualization height={500} /> */}
+                    <SampleVisualization height={600} bgColor="#303030" blank={true} />
                   </Col>
                 </Row>
               </Col>

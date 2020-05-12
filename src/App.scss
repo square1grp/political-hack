@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
+@import "./assets/font-awesome-4.7.0/scss/font-awesome.scss";
 
 body {
   background-color: #000000;
@@ -11,23 +12,6 @@ body {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-*[class*="feature-mockup-"] {
-  min-height: 400px;
-  background-color: #270262;
-
-  &.bg-gray {
-    background-color: #303030;
-  }
-
-  &.feature-mockup-one {
-    height: 850px;
-  }
-
-  &.feature-mockup-five {
-    height: 600px;
-  }
 }
 
 @media screen and (min-width: 1200px) {

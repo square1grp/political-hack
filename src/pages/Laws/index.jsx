@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { UserInfo } from '../../components'
+import { UserInfo, SampleVisualization } from '../../components'
 
 
 class Laws extends React.Component {
@@ -17,7 +17,7 @@ class Laws extends React.Component {
                   </Col>
 
                   <Col xs={12} lg={9}>
-                    <div className="rounded feature-mockup-four" />
+                    <SampleVisualization height={400} bgColor="#270262" blank={true} />
                   </Col>
                 </Row>
               </Col>
@@ -25,22 +25,22 @@ class Laws extends React.Component {
               <Col xs={12}>
                 <Row>
                   <Col xs={12} lg={4}>
-                    <div className="rounded feature-mockup-five bg-gray mb-4" />
-                    <div className="rounded feature-mockup-six" />
+                    <SampleVisualization height={450} bgColor="#303030" blank={true} />
+                    <SampleVisualization height={350} bgColor="#270262" blank={true} />
                   </Col>
 
                   <Col xs={12} lg={8}>
                     <Row>
                       <Col xs={12} lg={6} className="mb-4">
-                        <div className="rounded feature-mockup-three bg-gray" />
+                        <SampleVisualization height={350} bgColor="#303030" blank={true} />
                       </Col>
 
                       <Col xs={12} lg={6} className="mb-4">
-                        <div className="rounded feature-mockup-four" />
+                        <SampleVisualization height={350} bgColor="#270262" blank={true} />
                       </Col>
 
                       <Col xs={12}>
-                        <div className="rounded feature-mockup-five bg-gray" />
+                        <SampleVisualization height={450} bgColor="#303030" blank={true} />
                       </Col>
                     </Row>
                   </Col>
