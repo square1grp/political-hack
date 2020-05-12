@@ -1,7 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import { UserInfo } from '../../components'
-import donorsImgSrc from '../../assets/images/donors-img.png'
 import './style.scss'
 
 
@@ -9,12 +8,6 @@ class Donors extends React.Component {
   render() {
     return (
       <Container fluid className="donors-page">
-        <Row>
-          <Col className="text-center my-5" lg={{ span: 6, offset: 3 }}>
-            <Image src={donorsImgSrc} fluid />
-          </Col>
-        </Row>
-
         <Row>
           <Col lg={{ span: 10, offset: 1 }}>
             <Row>

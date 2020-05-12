@@ -1,19 +1,12 @@
 import React from 'react'
 import { Container, Row, Col, Image } from 'react-bootstrap'
 import { UserInfo } from '../../components'
-import issuesImgSrc from '../../assets/images/issues-img.png'
 
 
 class Issues extends React.Component {
   render() {
     return (
       <Container fluid className="issues-page">
-        <Row>
-          <Col className="text-center my-5" lg={{ span: 6, offset: 3 }}>
-            <Image src={issuesImgSrc} fluid />
-          </Col>
-        </Row>
-
         <Row>
           <Col lg={{ span: 10, offset: 1 }}>
             <Row>
