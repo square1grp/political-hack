@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import visualizationActions from '../../redux/visualization/action'
+import { Spinner } from 'react-bootstrap'
 import './style.scss'
 
-import { Spinner } from 'react-bootstrap'
 
 /*
   This is a Sample Visualization Component which shows data with d3
@@ -11,13 +11,11 @@ import { Spinner } from 'react-bootstrap'
 class SampleVisualization extends React.Component {
   constructor(props) {
     super(props)
+    this.visRef = React.createRef()
   }
 
   componentWillMount() {
-    this.props.fetchData()
-  }
-
-  componentDidMount() {
+    // this.props.fetchData()
   }
 
   render() {
@@ -27,10 +25,8 @@ class SampleVisualization extends React.Component {
       apiProcessing
     } = this.props
 
-    console.log(apiProcessing)
-
     return (
-      <div className="mb-4 d-flex justify-content-center align-items-center" style={{ minHeight: height, backgroundColor: bgColor }}>
+      <div ref={this.visRef} className="mb-4 d-flex justify-content-center align-items-center" style={{ minHeight: height, backgroundColor: bgColor }}>
         {
           apiProcessing ?
             <React.Fragment>
@@ -41,7 +37,9 @@ class SampleVisualization extends React.Component {
                 role="status"
                 aria-hidden="true"
               /> &nbsp; Loading . . .
-            </React.Fragment> : <React.Fragment />
+            </React.Fragment>
+            :
+            <React.Fragment />
         }
       </div>
     )

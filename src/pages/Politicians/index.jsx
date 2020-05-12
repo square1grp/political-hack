@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Image } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { UserInfo, SampleVisualization } from '../../components'
 import './style.scss'
 
@@ -12,9 +12,8 @@ class Politicians extends React.Component {
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
                 <UserInfo type="politicians" />
-                <div className="rounded feature-mockup-three bg-gray mb-4" />
-                {/* <SampleVisualization height={350} bgColor="#303030" /> */}
-                <SampleVisualization height={350} bgColor="#270262" />
+                <SampleVisualization height={350} bgColor="#303030" />
+                <div className="rounded feature-mockup-four mb-4" />
               </Col>
 
               <Col xs={12} lg={7}>

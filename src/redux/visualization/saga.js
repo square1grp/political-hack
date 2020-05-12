@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call, delay } from 'redux-saga/effects'
+import { all, takeLatest, put, call } from 'redux-saga/effects'
 import actions from './action'
 import appActions from '../app/action'
 
