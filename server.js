@@ -1,15 +1,15 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+require('dotenv').config()
 
-const app = express();
-const port = process.env.PORT || 5000;
+const express = require('express')
+const bodyParser = require('body-parser')
+const api_routes = require('./api_routes')
+const port = process.env.API_PORT || 5000
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const app = express()
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
+app.use('/api', api_routes)
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${process.env.API_PORT}`))
