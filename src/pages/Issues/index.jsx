@@ -8,6 +8,12 @@ class Issues extends React.Component {
     return (
       <Container fluid className="issues-page">
         <Row>
+          <Col className="my-5">
+            <h1 className="text-center">Issues</h1>
+          </Col>
+        </Row>
+
+        <Row>
           <Col lg={{ span: 10, offset: 1 }}>
             <Row>
               <Col xs={12}>

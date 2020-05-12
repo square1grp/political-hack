@@ -8,7 +8,13 @@ import lastsShirtImgSrc from '../../assets/images/the-last-shirt.jpg'
 class Blogs extends React.Component {
   render() {
     return (
-      <Container className="browse-page">
+      <Container className="blogs-page">
+        <Row>
+          <Col className="my-5">
+            <h1 className="text-center">Blogs</h1>
+          </Col>
+        </Row>
+
         <Row>
           <Col className="my-5">
             <h1 className="text-center">Recent Blog Entries:</h1>

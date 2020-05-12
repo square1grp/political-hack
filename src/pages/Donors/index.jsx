@@ -9,6 +9,12 @@ class Donors extends React.Component {
     return (
       <Container fluid className="donors-page">
         <Row>
+          <Col className="my-5">
+            <h1 className="text-center">Donors</h1>
+          </Col>
+        </Row>
+
+        <Row>
           <Col lg={{ span: 10, offset: 1 }}>
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>

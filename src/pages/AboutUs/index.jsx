@@ -6,6 +6,12 @@ class AboutUs extends React.Component {
     return (
       <Container className="about-us-page">
         <Row>
+          <Col className="my-5">
+            <h1 className="text-center">About Us</h1>
+          </Col>
+        </Row>
+
+        <Row>
           <Col xs={12} lg={6}>
             <iframe title="survey monkey" width="100%" height="100%" frameborder="0" allowtransparency="true" src="https://www.surveymonkey.com/r/K9ZVQG5?embedded=1"></iframe>
           </Col>

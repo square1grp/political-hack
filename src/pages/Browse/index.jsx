@@ -12,6 +12,12 @@ class HomePage extends React.Component {
       <Container className="browse-page">
         <Row>
           <Col className="my-5">
+            <h1 className="text-center">Browse</h1>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col className="my-5">
             <h2 className="text-center">A few things you can expect to get out of "Political Hack"</h2>
           </Col>
         </Row>

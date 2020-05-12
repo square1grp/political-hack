@@ -8,6 +8,12 @@ class Investigate extends React.Component {
     return (
       <Container fluid className="investigate-page">
         <Row>
+          <Col className="my-5">
+            <h1 className="text-center">Investigate</h1>
+          </Col>
+        </Row>
+
+        <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={3}>
             <SampleVisualization height={350} bgColor="#270262" blank={true} />
