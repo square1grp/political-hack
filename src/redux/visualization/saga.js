@@ -6,15 +6,24 @@ export function* fetchData() {
   yield put({ type: appActions.API_CALL_START })
 
   try {
-    const propublica_url = 'https://api.propublica.org/campaign-finance/v1/2016/candidates/search.json'
-    const response = yield call(() => fetch(propublica_url, {
-      headers: { 'X-API-Key': 'SMkxRIqNMxu2V1f4cpr3RZiZ9zjvbRaS1LHLptem' }
-    }).then(res => {
-      // yield put({ type: actions.FETCH_DATA_SUCCESS })
+    let res_status = null;
+    const response = yield call(() => fetch(
+      process.env.REACT_APP_API_ENDPOINT + '/candidates/search'
+    ).then(res => {
+      res_status = res.status
+
+      if (res.status !== 200)
+        return res.text()
+
       return res.json()
     }))
 
-    console.log(response)
+    if (res_status === 200) {
+      yield put({ type: actions.FETCH_DATA_SUCCESS, candidates: response })
+
+    } else {
+      throw (response)
+    }
   } catch (e) {
     yield put({ type: actions.FETCH_DATA_FAILED })
   }
