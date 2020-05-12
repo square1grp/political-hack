@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import visualizationActions from '../../redux/visualization/action'
 import './style.scss'
 
+/*
+  This is a Sample Visualization Component which shows data with d3
+ */
 class SampleVisualization extends React.Component {
   constructor(props) {
     super(props)

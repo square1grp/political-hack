@@ -4,6 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import './style.scss'
 
+/*
+  This component is a header component
+    - Search, Sign Up/In links
+    - Banner image
+    - Navigation
+ */
 class Header extends React.Component {
   render() {
     return (

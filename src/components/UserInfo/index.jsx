@@ -5,6 +5,9 @@ import headshotImgSrc from '../../assets/images/headshot.jpg'
 import { Row, Col, Image } from 'react-bootstrap'
 import './style.scss'
 
+/*
+  User Info component used in pages (ex: politicians, donors, etc.)
+ */
 class UserInfo extends React.Component {
   componentWillMount() {
     this.props.signin({ username: "", password: "" })
