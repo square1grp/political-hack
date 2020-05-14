@@ -19,23 +19,23 @@ class Donors extends React.Component {
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
                 <UserInfo type="donors" />
-                <SampleVisualization height={350} bgColor="#303030" blank={true} />
-                <SampleVisualization height={350} bgColor="#270262" blank={true} />
+                <SampleVisualization height={350} bgColor="#303030" empty={true} />
+                <SampleVisualization height={350} bgColor="#270262" empty={true} />
               </Col>
 
               <Col xs={12} lg={7}>
                 <Row>
                   <Col xs={12} lg={8} className="xl-four-sevenths">
-                    <SampleVisualization height={750} bgColor="#270262" blank={true} />
+                    <SampleVisualization height={750} bgColor="#270262" empty={true} />
                   </Col>
 
                   <Col xs={12} lg={4} className="xl-three-sevenths">
-                    <SampleVisualization height={350} bgColor="#303030" blank={true} />
-                    <SampleVisualization height={350} bgColor="#270262" blank={true} />
+                    <SampleVisualization height={350} bgColor="#303030" empty={true} />
+                    <SampleVisualization height={350} bgColor="#270262" empty={true} />
                   </Col>
 
                   <Col xs={12}>
-                    <SampleVisualization height={600} bgColor="#303030" blank={true} />
+                    <SampleVisualization height={600} bgColor="#303030" empty={true} />
                   </Col>
                 </Row>
               </Col>
