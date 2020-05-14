@@ -17,7 +17,7 @@ class SampleVisualization extends React.Component {
     this.state = {
       uuid: uuidv4(),
       isUpdated: false,
-      visType: 'graph'
+      visType: 'bar'
     }
   }
 
@@ -28,30 +28,12 @@ class SampleVisualization extends React.Component {
 
   componentDidMount() {
     if (!this.isEmpty())
-      this.drawGraph()
+      this.startDraw()
   }
 
   componentDidUpdate() {
-    if (!this.isEmpty()) {
-      switch (this.getVisType()) {
-        case 'bar':
-          this.drawBarChart()
-          break
-
-        case 'line':
-          this.drawLinePlot()
-          break
-
-        case 'scatter':
-          this.drawScatterPlot()
-          break
-
-        case 'graph':
-        default:
-          this.drawGraph()
-          break
-      }
-    }
+    if (!this.isEmpty())
+      this.startDraw()
   }
 
   isEmpty() {
@@ -66,11 +48,8 @@ class SampleVisualization extends React.Component {
     return this.state.visType
   }
 
-  setVisType(type) {
-    this.setState({ visType: type })
-    this.resetSVG()
-
-    switch (type) {
+  startDraw() {
+    switch (this.getVisType()) {
       case 'bar':
         this.drawBarChart()
         break
@@ -90,12 +69,33 @@ class SampleVisualization extends React.Component {
     }
   }
 
+  setVisType(type) {
+    this.setState({ visType: type })
+    this.resetSVG()
+    this.startDraw()
+  }
+
   resetSVG() {
     d3.select(this.visRef.current).selectAll('svg > *').remove()
     this.setState({ isUpdated: false })
   }
 
-  parseRawDataToBarData(rawData) { }
+  parseRawDataToBarData(rawData) {
+    let parsedData = {}
+
+    rawData.forEach(candidate => {
+      if (candidate.party in parsedData) {
+        parsedData[candidate.party]['count'] += 1
+      } else {
+        parsedData[candidate.party] = {
+          party: candidate.party,
+          count: 1
+        }
+      }
+    })
+
+    return Object.values(parsedData)
+  }
 
   parseRawDataToLineData(rawData) { }
 
@@ -161,7 +161,65 @@ class SampleVisualization extends React.Component {
     }
   }
 
-  drawBarChart() { }
+  drawBarChart() {
+    const { isUpdated } = this.state
+    const data = this.getVisData('bar')
+    const margin = { top: 50, right: 50, bottom: 80, left: 50 }
+    const { width, height } = {
+      width: this.visRef.current.offsetWidth,
+      height: this.visRef.current.offsetHeight,
+    }
+
+    if (!isUpdated && data.length) {
+      let svg = d3.select(this.visRef.current).select('svg')
+        .attr("viewBox", [0, 0, width, height]);
+
+      let x = d3.scaleBand()
+        .domain(d3.range(data.length))
+        .range([margin.left, width - margin.right])
+        .padding(0.1)
+
+      let y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.count)])
+        .range([height - margin.bottom, margin.top])
+
+      let xAxis = g => g
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x)
+          .tickFormat(i => data[i].party)
+          .tickSizeOuter(0))
+
+      let yAxis = g => g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y)
+          .tickValues(y.ticks().filter(tick => Number.isInteger(tick)))
+          .tickFormat(d3.format("d")))
+        .call(g => g.append("text")
+          .attr("x", -margin.left)
+          .attr("y", 10)
+          .attr("fill", "currentColor")
+          .attr("text-anchor", "start")
+          .text(data.y))
+
+      svg.append("g")
+        .attr("fill", "steelblue")
+        .selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", (d, i) => x(i))
+        .attr("y", d => y(d.count))
+        .attr("height", d => y(0) - y(d.count))
+        .attr("width", x.bandwidth());
+
+      svg.append("g")
+        .call(xAxis);
+
+      svg.append("g")
+        .call(yAxis);
+
+      this.setState({ isUpdated: true })
+    }
+  }
 
   drawLinePlot() { }
 
@@ -176,8 +234,6 @@ class SampleVisualization extends React.Component {
     }
 
     if (!isUpdated && nodes.length) {
-      this.resetSVG()
-
       let svg = d3.select(this.visRef.current).select('svg')
       let colors = d3.scaleOrdinal(d3.schemeCategory10)
 
