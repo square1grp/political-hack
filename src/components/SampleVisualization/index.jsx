@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import visualizationActions from '../../redux/visualization/action'
-import { Spinner } from 'react-bootstrap'
+import { Spinner, Dropdown } from 'react-bootstrap'
 import './style.scss'
+import * as d3 from 'd3'
+import { v4 as uuidv4 } from 'uuid'
 
 
 /*
@@ -13,90 +15,165 @@ class SampleVisualization extends React.Component {
     super(props)
     this.visRef = React.createRef()
     this.state = {
-      visUpdated: false
+      uuid: uuidv4(),
+      isUpdated: false
     }
   }
 
   componentWillMount() {
-    // this.props.fetchData()
+    const { blank } = this.props
+
+    if (!blank)
+      this.props.fetchData(this.getUUID())
   }
 
-  updateVisualization() {
-    const { visUpdated } = this.state
-    const { candidates, bgColor } = this.props
-    const { nodes, links } = candidates
+  getUUID() {
+    const { uuid } = this.state
+
+    return uuid
+  }
+
+  parseDataToGraphData(rawData) {
+    if (!rawData)
+      return { nodes: [], links: [] }
+
+    const nodes = rawData.map((candidate, idx) => {
+      return {
+        id: this.getUUID() + '_' + idx,
+        c_id: candidate['candidate_id'],
+        name: candidate['name'],
+        party: candidate['party'],
+      }
+    })
+
+    let links = []
+    let node_id_history = []
+    for (let node_idx = 0; node_idx < nodes.length; node_idx++) {
+      const c_node = nodes[node_idx]
+      node_id_history.push(c_node['id'])
+
+      const o_nodes = nodes.filter(node => {
+        if (node_id_history.includes(node['id']))
+          return false
+
+        return node['party'] == c_node['party']
+      })
+
+      const _links = o_nodes.map(node => {
+        return {
+          source: c_node['id'],
+          target: node['id']
+        }
+      })
+
+      links = [...links, ..._links]
+    }
+
+    return { nodes, links }
+  }
+
+  getVisData(visType) {
+    const { visData } = this.props
+    const rawData = visData[this.getUUID()]
+
+    switch (visType) {
+      case 'bar':
+        break
+
+      case 'line':
+        break
+
+      case 'scatter':
+        break
+
+      case 'graph':
+      default:
+        return this.parseDataToGraphData(rawData)
+    }
+  }
+
+  drawGraph() {
+    const { isUpdated } = this.state
+    const { nodes, links } = this.getVisData('graph')
     const { width, height } = {
       width: this.visRef.current.offsetWidth,
       height: this.visRef.current.offsetHeight,
     }
 
-    if (!visUpdated && nodes.length) {
-      const d3 = window.d3
+    if (!isUpdated && nodes.length) {
+      let svg = d3.select(this.visRef.current).select('svg')
+      let colors = d3.scaleOrdinal(d3.schemeCategory10)
 
-      let svg = d3.select(this.visRef.current).append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .style("background-color", bgColor)
+      let graphLayout = d3.forceSimulation(nodes)
+        .force('charge', d3.forceManyBody().strength(-2000))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('x', d3.forceX(width / 2).strength(1))
+        .force('y', d3.forceY(height / 2).strength(1))
+        .force('link', d3.forceLink(links)
+          .id((d) => { return d.id })
+          .distance(50)
+          .strength(1))
 
-      let force = d3.layout.force()
-        .gravity(.05)
-        .distance(100)
-        .charge(-100)
-        .size([width, height])
-        .nodes(nodes)
-        .links(links)
-        .start()
-
-      let color = d3.scale.category20()
-      let colors = d3.scale.category10()
-
-      let link = svg.selectAll(".link")
+      let link = svg.selectAll('link')
         .data(links)
-        .enter().append("line")
-        // .attr("class", "link")
-        .style("stroke", function (d) { return colors(d.party) })
-        .style("stroke-width", function (d) { return 4 })
+        .enter().append('line')
+        .style('stroke', (d) => { return colors(d.weight) })
+        .style('stroke-width', 2)
 
-      let node = svg.selectAll(".node")
+      let node = svg.selectAll('node')
         .data(nodes)
-        .enter().append("g")
-        // .attr("class", "node")
-        .call(force.drag)
-      node.append("circle")
-        .attr("r", "10")
-        .style("stroke", "yellow")
-        .style("fill", function (d) { return color(d.party) })
-      node.append("text")
-        .attr("dx", 12)
-        .attr("dy", ".35em")
-        .text(function (d) { return d.name })
-        .style("stroke", "white")
+        .enter().append('g')
+        .call(d3.drag)
 
-      force.on("tick", function () {
-        link.attr("x1", function (d) { return d.source.x })
-          .attr("y1", function (d) { return d.source.y })
-          .attr("x2", function (d) { return d.target.x })
-          .attr("y2", function (d) { return d.target.y })
+      node.append('circle')
+        .attr('r', 8)
+        .style('fill', (d) => { return colors(d.party) })
 
-        node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")" })
+      node.append('text')
+        .attr('dx', 10)
+        .attr('dy', '.35em')
+        .text((d) => { return d.party + ':   ' + d.name })
+        .style('fill', 'white')
+
+      node.call(
+        d3.drag()
+          .on('start', (d) => {
+            d3.event.sourceEvent.stopPropagation()
+            if (!d3.event.active) graphLayout.alphaTarget(0.3).restart()
+            d.fx = d.x
+            d.fy = d.y
+          })
+          .on('drag', (d) => {
+            d.fx = d3.event.x
+            d.fy = d3.event.y
+          })
+          .on('end', (d) => {
+            if (!d3.event.active) graphLayout.alphaTarget(0)
+            d.fx = null
+            d.fy = null
+          })
+      )
+
+      graphLayout.on('tick', () => {
+        link
+          .attr('x1', (d) => { return d.source.x })
+          .attr('y1', (d) => { return d.source.y })
+          .attr('x2', (d) => { return d.target.x })
+          .attr('y2', (d) => { return d.target.y })
+
+        node
+          .attr('transform', (d) => { return 'translate(' + d.x + ',' + d.y + ')' })
       })
 
-      this.setState({ visUpdated: true })
+      this.setState({ isUpdated: true })
     }
-  }
-
-  componentDidMount() {
-    const { blank } = this.props
-
-    if (!blank)
-      this.updateVisualization()
   }
 
   componentDidUpdate() {
     const { blank } = this.props
 
     if (!blank)
-      this.updateVisualization()
+      this.drawGraph()
   }
 
   render() {
@@ -108,22 +185,33 @@ class SampleVisualization extends React.Component {
     } = this.props
 
     return (
-      <div ref={this.visRef} className="vis-container mb-4 d-flex justify-content-center align-items-center" style={{ minHeight: height, backgroundColor: bgColor }}>
+      <div ref={this.visRef} className='vis-container mb-4' style={{ minHeight: height, backgroundColor: bgColor }}>
+        <svg width='100%' height={height} />
         {
-          apiProcessing && !blank ?
-            <React.Fragment>
+          apiProcessing[this.getUUID()] && !blank ?
+            <div className='loading-container d-flex justify-content-center align-items-center'>
               <Spinner
-                as="span"
-                animation="grow"
-                size="xl"
-                role="status"
-                aria-hidden="true"
-              /> &nbsp; Loading . . .
-            </React.Fragment>
-            :
-            <React.Fragment />
+                as='span'
+                animation='grow'
+                size='xl'
+                role='status'
+                aria-hidden='true'
+              />
+            </div>
+            : <React.Fragment />
         }
-        <span className="settings"><i class="fa fa-cog" aria-hidden="true"></i></span>
+        <Dropdown className='settings'>
+          <Dropdown.Toggle variant='success' id='dropdown-basic'>
+            <i className='fa fa-cog' aria-hidden='true'></i>
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item>Bar Chart</Dropdown.Item>
+            <Dropdown.Item>Line Plot</Dropdown.Item>
+            <Dropdown.Item>Scatter Plot</Dropdown.Item>
+            <Dropdown.Item active>Graph</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     )
   }

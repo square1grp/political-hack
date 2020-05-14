@@ -1,7 +1,7 @@
 import actions from './action';
 
 const initialState = {
-  apiProcessing: false,
+  apiProcessing: {},
 }
 
 export default function appReducer(state = initialState, action) {
@@ -9,12 +9,18 @@ export default function appReducer(state = initialState, action) {
     case actions.API_CALL_START:
       return {
         ...state,
-        apiProcessing: true
+        apiProcessing: {
+          ...state.apiProcessing,
+          [action.uuid]: true
+        }
       }
     case actions.API_CALL_END:
       return {
         ...state,
-        apiProcessing: false
+        apiProcessing: {
+          ...state.apiProcessing,
+          [action.uuid]: false
+        }
       }
     default:
       return state;

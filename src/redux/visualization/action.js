@@ -3,8 +3,8 @@ const actions = {
   FETCH_DATA_SUCCESS: 'FETCH_DATA_SUCCESS',
   FETCH_DATA_FAILED: 'FETCH_DATA_SUCCESS',
 
-  fetchData: () => (dispatch) => {
-    dispatch({ type: actions.FETCH_DATA });
+  fetchData: (uuid) => (dispatch) => {
+    dispatch({ type: actions.FETCH_DATA, uuid });
   }
 };
 
