@@ -23,8 +23,8 @@ class SampleVisualization extends React.Component {
   }
 
   componentWillMount() {
-    // if (!this.isEmpty())
-    //   this.props.fetchData(this.getUUID()) // fetch visualization data via api
+    if (!this.isEmpty())
+      this.props.fetchData(this.getUUID()) // fetch visualization data via api
   }
 
   componentDidMount() {
