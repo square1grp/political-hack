@@ -5,6 +5,7 @@ import AppRouter from './routes'
 
 import './App.scss'
 
+// App Container
 function App() {
   return (
     <Provider store={store}>

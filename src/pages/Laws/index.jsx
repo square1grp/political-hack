@@ -23,7 +23,7 @@ class Laws extends React.Component {
                   </Col>
 
                   <Col xs={12} lg={9}>
-                    <SampleVisualization height={400} bgColor="#270262" empty={true} />
+                    <SampleVisualization height={400} bgColor="#270262" />
                   </Col>
                 </Row>
               </Col>
@@ -31,22 +31,22 @@ class Laws extends React.Component {
               <Col xs={12}>
                 <Row>
                   <Col xs={12} lg={4}>
-                    <SampleVisualization height={450} bgColor="#303030" empty={true} />
-                    <SampleVisualization height={350} bgColor="#270262" empty={true} />
+                    <SampleVisualization height={450} bgColor="#303030" />
+                    <SampleVisualization height={350} bgColor="#270262" />
                   </Col>
 
                   <Col xs={12} lg={8}>
                     <Row>
                       <Col xs={12} lg={6} className="mb-4">
-                        <SampleVisualization height={350} bgColor="#303030" empty={true} />
+                        <SampleVisualization height={350} bgColor="#303030" />
                       </Col>
 
                       <Col xs={12} lg={6} className="mb-4">
-                        <SampleVisualization height={350} bgColor="#270262" empty={true} />
+                        <SampleVisualization height={350} bgColor="#270262" />
                       </Col>
 
                       <Col xs={12}>
-                        <SampleVisualization height={450} bgColor="#303030" empty={true} />
+                        <SampleVisualization height={450} bgColor="#303030" />
                       </Col>
                     </Row>
                   </Col>

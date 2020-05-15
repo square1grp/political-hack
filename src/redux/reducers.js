@@ -4,6 +4,7 @@ import App from './app/reducer'
 import Auth from './auth/reducer'
 import Visualization from './visualization/reducer'
 
+// combine all reducers
 export default (history) => combineReducers({
   router: connectRouter(history),
   App,

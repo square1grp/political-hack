@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import rawData from '../../assets/json/sample.json'
 
 
-/*
+/**
   This is a Sample Visualization Component which shows data with d3
  */
 class SampleVisualization extends React.Component {
@@ -16,15 +16,15 @@ class SampleVisualization extends React.Component {
     super(props)
     this.visRef = React.createRef()
     this.state = {
-      uuid: uuidv4(),
-      isUpdated: false,
-      visType: 'graph'
+      uuid: uuidv4(), // create uuid for component. this is unique component id
+      isUpdated: false, // flag to update the component
+      visType: 'graph' // default visualization type: bar, line, scatter, graph
     }
   }
 
   componentWillMount() {
     // if (!this.isEmpty())
-    //   this.props.fetchData(this.getUUID())
+    //   this.props.fetchData(this.getUUID()) // fetch visualization data via api
   }
 
   componentDidMount() {
@@ -34,21 +34,32 @@ class SampleVisualization extends React.Component {
 
   componentDidUpdate() {
     if (!this.isEmpty())
-      this.startDraw()
+      this.startDraw() // draw the component after api call is finished
   }
 
+  // check if component is a mockup
   isEmpty() {
     return this.props.empty
   }
 
+  // get componet uuid
   getUUID() {
     return this.state.uuid
   }
 
+  // get component type
   getVisType() {
     return this.state.visType
   }
 
+  // set component type
+  setVisType(type) {
+    this.setState({ visType: type })
+    this.resetSVG()
+    this.startDraw()
+  }
+
+  // start drawing visualization
   startDraw() {
     switch (this.getVisType()) {
       case 'bar':
@@ -70,23 +81,20 @@ class SampleVisualization extends React.Component {
     }
   }
 
-  setVisType(type) {
-    this.setState({ visType: type })
-    this.resetSVG()
-    this.startDraw()
-  }
-
+  // clear svg for updating visualization
   resetSVG() {
     d3.select(this.visRef.current).selectAll('svg > *').remove()
     this.setState({ isUpdated: false })
   }
 
+  // parse fetched data for bar chart
   parseRawDataToBarData(rawData) {
     if (!rawData)
       return []
 
     let parsedData = {}
 
+    // main part for a conversion
     rawData.forEach(candidate => {
       if (candidate.party in parsedData) {
         parsedData[candidate.party]['count'] += 1
@@ -101,11 +109,14 @@ class SampleVisualization extends React.Component {
     return Object.values(parsedData)
   }
 
+  // parse fetched data for line chart
   parseRawDataToLineData(rawData) {
     if (!rawData)
       return []
 
     let parsedData = {}
+
+    // main part for a conversion
     rawData.forEach(candidate => {
       candidate.election_years.forEach(election_year => {
         if (election_year in parsedData) {
@@ -122,11 +133,14 @@ class SampleVisualization extends React.Component {
     return Object.values(parsedData)
   }
 
+  // parse fetched data for scatter plot
   parseRawDataToScatterData() {
     if (!rawData)
       return []
 
     let parsedData = {}
+
+    // main part for a conversion
     rawData.forEach(candidate => {
       candidate.election_years.forEach(election_year => {
         if (election_year in parsedData) {
@@ -143,10 +157,12 @@ class SampleVisualization extends React.Component {
     return Object.values(parsedData)
   }
 
+  // parse fetched data for graph
   parseRawDataToGraphData(rawData) {
     if (!rawData)
       return { nodes: [], links: [] }
 
+    // create nodes
     const nodes = rawData.map((candidate, idx) => {
       return {
         id: this.getUUID() + '_' + idx,
@@ -156,6 +172,7 @@ class SampleVisualization extends React.Component {
       }
     })
 
+    // create links
     let links = []
     let node_id_history = []
     for (let node_idx = 0; node_idx < nodes.length; node_idx++) {
@@ -182,9 +199,10 @@ class SampleVisualization extends React.Component {
     return { nodes, links }
   }
 
+  // get visualization data (return parsed data)
   getVisData(visType) {
-    // const { visData } = this.props
-    // const rawData = visData[this.getUUID()]
+    const { visData } = this.props
+    const rawData = visData[this.getUUID()]
 
     switch (visType) {
       case 'bar':
@@ -202,6 +220,7 @@ class SampleVisualization extends React.Component {
     }
   }
 
+  // draw bar chart
   drawBarChart() {
     const { isUpdated } = this.state
     const data = this.getVisData('bar')
@@ -212,24 +231,29 @@ class SampleVisualization extends React.Component {
     }
 
     if (!isUpdated && data.length) {
+      // init svg for bar chart
       let svg = d3.select(this.visRef.current).select('svg')
         .attr('viewBox', [0, 0, width, height]);
 
+      // x values for ticks
       let x = d3.scaleBand()
         .domain(d3.range(data.length))
         .range([margin.left, width - margin.right])
         .padding(0.1)
 
+      // y values for ticks
       let y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.count)])
         .range([height - margin.bottom, margin.top])
 
+      // x-axis
       let xAxis = g => g
         .attr('transform', `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x)
           .tickFormat(i => data[i].party)
           .tickSizeOuter(0))
 
+      // y-axis
       let yAxis = g => g
         .attr('transform', `translate(${margin.left},0)`)
         .call(d3.axisLeft(y)
@@ -242,6 +266,7 @@ class SampleVisualization extends React.Component {
           .attr('text-anchor', 'start')
           .text(data.y))
 
+      // add bars
       svg.append('g')
         .attr('fill', 'steelblue')
         .selectAll('rect')
@@ -252,9 +277,11 @@ class SampleVisualization extends React.Component {
         .attr('height', d => y(0) - y(d.count))
         .attr('width', x.bandwidth());
 
+      // add x-axis
       svg.append('g')
         .call(xAxis);
 
+      // add y-axis
       svg.append('g')
         .call(yAxis);
 
@@ -262,6 +289,7 @@ class SampleVisualization extends React.Component {
     }
   }
 
+  // draw line plot
   drawLinePlot() {
     const { isUpdated } = this.state
     const data = this.getVisData('line')
@@ -272,6 +300,7 @@ class SampleVisualization extends React.Component {
     }
 
     if (!isUpdated && data.length) {
+      // init svg for line plot
       let svg = d3.select(this.visRef.current).select('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
@@ -313,6 +342,7 @@ class SampleVisualization extends React.Component {
     }
   }
 
+  // draw scatter plot
   drawScatterPlot() {
     const { isUpdated } = this.state
     const data = this.getVisData('line')
@@ -323,6 +353,7 @@ class SampleVisualization extends React.Component {
     }
 
     if (!isUpdated && data.length) {
+      // init svg container for scatter
       let svg = d3.select(this.visRef.current).select('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
@@ -376,6 +407,7 @@ class SampleVisualization extends React.Component {
     }
   }
 
+  // draw graph (force layout)
   drawGraph() {
     const { isUpdated } = this.state
     const { nodes, links } = this.getVisData('graph')
@@ -385,9 +417,12 @@ class SampleVisualization extends React.Component {
     }
 
     if (!isUpdated && nodes.length) {
+      // svg container
       let svg = d3.select(this.visRef.current).select('svg')
+      // colors for nodes & links
       let colors = d3.scaleOrdinal(d3.schemeCategory10)
 
+      // create force-simulation
       let graphLayout = d3.forceSimulation(nodes)
         .force('charge', d3.forceManyBody().strength(-3000))
         .force('center', d3.forceCenter(width / 2, height / 2))
@@ -398,12 +433,14 @@ class SampleVisualization extends React.Component {
           .distance(100)
           .strength(1))
 
+      // link elements
       let link = svg.selectAll('link')
         .data(links)
         .enter().append('line')
         .style('stroke', (d) => { return colors(d.weight) })
         .style('stroke-width', 2)
 
+      // node elements
       let node = svg.selectAll('node')
         .data(nodes)
         .enter().append('g')
@@ -413,12 +450,14 @@ class SampleVisualization extends React.Component {
         .attr('r', 8)
         .style('fill', (d) => { return colors(d.party) })
 
+      // add node labels
       node.append('text')
         .attr('dx', 10)
         .attr('dy', '.35em')
         .text((d) => { return d.party + ':   ' + d.name })
         .style('fill', 'white')
 
+      // add action for drag and drop
       node.call(
         d3.drag()
           .on('start', (d) => {
@@ -494,15 +533,18 @@ class SampleVisualization extends React.Component {
   }
 }
 
+// integrate redux-state to props
 const mapStateToProps = (state) => ({
   ...state.Visualization,
   ...state.App
 })
 
+// integrate redux-actions to props
 const mapDispatchToProps = {
   ...visualizationActions
 }
 
+// create visualization component integrated with redux-saga
 export default connect(
   mapStateToProps,
   mapDispatchToProps

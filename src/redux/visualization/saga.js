@@ -2,6 +2,7 @@ import { all, takeEvery, put, call } from 'redux-saga/effects'
 import actions from './action'
 import appActions from '../app/action'
 
+// visualization saga
 export function* fetchData({ uuid = null }) {
   yield put({ type: appActions.API_CALL_START, uuid })
 

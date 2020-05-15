@@ -16,13 +16,13 @@ class Investigate extends React.Component {
         <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={3}>
-            <SampleVisualization height={350} bgColor="#270262" empty={true} />
+            <SampleVisualization height={350} bgColor="#270262" />
           </Col>
           <Col xs={12} lg={4}>
-            <SampleVisualization height={350} bgColor="#303030" empty={true} />
+            <SampleVisualization height={350} bgColor="#303030" />
           </Col>
           <Col xs={12} lg={3}>
-            <SampleVisualization height={350} bgColor="#270262" empty={true} />
+            <SampleVisualization height={350} bgColor="#270262" />
           </Col>
         </Row>
 
@@ -38,10 +38,10 @@ class Investigate extends React.Component {
         <Row>
           <Col className="d-none d-lg-block" lg={1}></Col>
           <Col xs={12} lg={3}>
-            <SampleVisualization height={600} bgColor="#303030" empty={true} />
+            <SampleVisualization height={600} bgColor="#303030" />
           </Col>
           <Col xs={12} lg={7}>
-            <SampleVisualization height={500} bgColor="#270262" empty={true} />
+            <SampleVisualization height={500} bgColor="#270262" />
           </Col>
         </Row>
       </Container>

@@ -18,19 +18,19 @@ class Politicians extends React.Component {
             <Row>
               <Col xs={12} lg={{ span: 3, offset: 1 }}>
                 <UserInfo type="politicians" />
-                <SampleVisualization height={350} bgColor="#303030" empty={true} />
-                <SampleVisualization height={350} bgColor="#270262" empty={true} />
+                <SampleVisualization height={350} bgColor="#303030" />
+                <SampleVisualization height={350} bgColor="#270262" />
               </Col>
 
               <Col xs={12} lg={7}>
                 <Row>
                   <Col xs={12} lg={8} className="xl-four-sevenths">
-                    <SampleVisualization height={750} bgColor="#270262" empty={true} />
+                    <SampleVisualization height={750} bgColor="#270262" />
                   </Col>
 
                   <Col xs={12} lg={4} className="xl-three-sevenths">
-                    <SampleVisualization height={350} bgColor="#303030" empty={true} />
-                    <SampleVisualization height={350} bgColor="#270262" empty={true} />
+                    <SampleVisualization height={350} bgColor="#303030" />
+                    <SampleVisualization height={350} bgColor="#270262" />
                   </Col>
 
                   <Col xs={12}>

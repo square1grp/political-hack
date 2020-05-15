@@ -12,6 +12,7 @@ const history = createBrowserHistory()
 const sagaMiddleware = createSagaMiddleware()
 const routeMiddleware = routerMiddleware(history)
 
+// create store
 const store = createStore(
   createRootReducer(history), // root reducer with router state
   {},

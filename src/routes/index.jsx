@@ -13,6 +13,7 @@ import {
   AboutUsPage
 } from '../pages'
 
+// App Router
 class RoutedApplication extends React.Component {
   render() {
     return (

@@ -4,6 +4,7 @@ const initialState = {
   visData: {}
 }
 
+// visualization reducer
 export default function visReducer(state = initialState, action) {
   switch (action.type) {
     case visActions.FETCH_DATA_SUCCESS:
