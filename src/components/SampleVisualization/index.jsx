@@ -5,7 +5,7 @@ import { Spinner, Dropdown } from 'react-bootstrap'
 import './style.scss'
 import * as d3 from 'd3'
 import { v4 as uuidv4 } from 'uuid'
-import rawData from '../../assets/json/sample.json'
+// import rawData from '../../assets/json/sample.json'
 
 
 /**
@@ -134,7 +134,7 @@ class SampleVisualization extends React.Component {
   }
 
   // parse fetched data for scatter plot
-  parseRawDataToScatterData() {
+  parseRawDataToScatterData(rawData) {
     if (!rawData)
       return []
 
@@ -227,7 +227,7 @@ class SampleVisualization extends React.Component {
     const margin = { top: 50, right: 50, bottom: 80, left: 50 }
     const { width, height } = {
       width: this.visRef.current.offsetWidth,
-      height: this.visRef.current.offsetHeight,
+      height: this.visRef.current.offsetHeight - 60,
     }
 
     if (!isUpdated && data.length) {
@@ -296,7 +296,7 @@ class SampleVisualization extends React.Component {
     const margin = { top: 50, right: 50, bottom: 80, left: 50 }
     const { width, height } = {
       width: this.visRef.current.offsetWidth - 100,
-      height: this.visRef.current.offsetHeight - 130,
+      height: this.visRef.current.offsetHeight - 130 - 60,
     }
 
     if (!isUpdated && data.length) {
@@ -349,7 +349,7 @@ class SampleVisualization extends React.Component {
     const margin = { top: 50, right: 50, bottom: 80, left: 50 }
     const { width, height } = {
       width: this.visRef.current.offsetWidth - 100,
-      height: this.visRef.current.offsetHeight - 130,
+      height: this.visRef.current.offsetHeight - 130 - 60,
     }
 
     if (!isUpdated && data.length) {
@@ -380,17 +380,6 @@ class SampleVisualization extends React.Component {
           .tickValues(y.ticks().filter(tick => Number.isInteger(tick)))
           .tickFormat(d3.format('d')));
 
-      // Add the line
-      svg.append('path')
-        .datum(data)
-        .attr('fill', 'none')
-        .attr('stroke', 'steelblue')
-        .attr('stroke-width', 1.5)
-        .attr('d', d3.line()
-          .x((d) => { return x(d.election_year) })
-          .y((d) => { return y(d.count) })
-        )
-
       // Add the points
       svg
         .append('g')
@@ -413,7 +402,7 @@ class SampleVisualization extends React.Component {
     const { nodes, links } = this.getVisData('graph')
     const { width, height } = {
       width: this.visRef.current.offsetWidth,
-      height: this.visRef.current.offsetHeight,
+      height: this.visRef.current.offsetHeight - 60,
     }
 
     if (!isUpdated && nodes.length) {
@@ -497,11 +486,13 @@ class SampleVisualization extends React.Component {
     const {
       height,
       bgColor,
-      apiProcessing
+      apiProcessing,
+      title
     } = this.props
 
     return (
       <div ref={this.visRef} className='vis-container mb-4' style={{ minHeight: height, backgroundColor: bgColor }}>
+        <h4 className='text-center py-3 mb-0'>{title ? title : 'Sample Visualization'}</h4>
         <svg width='100%' height={height} />
         {
           apiProcessing[this.getUUID()] && !this.isEmpty() ?
