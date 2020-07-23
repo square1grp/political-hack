@@ -4,11 +4,13 @@ import appActions from '../app/action'
 
 // visualization saga
 export function* fetchData({ uuid = null }) {
+  // log api call is started
   yield put({ type: appActions.API_CALL_START, uuid })
 
   try {
     let res_status = null;
     if (uuid) {
+      // send a request to the backend to fetch candidates data
       const response = yield call(() => fetch(
         process.env.REACT_APP_API_ENDPOINT + '/candidates/search'
       ).then(res => {
@@ -20,10 +22,9 @@ export function* fetchData({ uuid = null }) {
         return res.json()
       }))
 
-      if (res_status === 200) {
+      if (res_status === 200) { // request is completed and use data.
         yield put({ type: actions.FETCH_DATA_SUCCESS, uuid, response })
-
-      } else {
+      } else { // requests is failed
         throw (response)
       }
     }
@@ -32,6 +33,7 @@ export function* fetchData({ uuid = null }) {
   }
 
 
+  // log api call is finished
   yield put({ type: appActions.API_CALL_END, uuid })
 }
 
