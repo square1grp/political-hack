@@ -1,0 +1,62 @@
+.search-page {
+  form button#submit,
+  div.select-search-type button#search-type-btn {
+    background-color: #270262;
+    border-color: #270262;
+
+    &:hover,
+    &:active {
+      background-color: #270262;
+      border-color: #270262;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(39, 2, 98, 0.5);
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+
+  div.select-search-type {
+    div.dropdown-menu {
+      background-color: #270262;
+      width: 100%;
+
+      .dropdown-item {
+        color: #fff;
+
+        &:hover {
+          background-color: rgba(70, 40, 150, 0.7);
+        }
+      }
+    }
+  }
+
+  form {
+    input[type="checkbox"] + label {
+      cursor: pointer;
+    }
+
+    div.btn-group#politican-type {
+      display: flex;
+
+      label {
+        background-color: transparent;
+        flex: 1;
+        border-color: #270262;
+
+        &.focus,
+        &:focus {
+          box-shadow: 0 0 0 0.2rem rgba(39, 2, 98, 0.5);
+        }
+
+        &.active {
+          background-image: linear-gradient(#462896, #270262, #462896);
+          background-color: #270262;
+        }
+      }
+    }
+  }
+}

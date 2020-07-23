@@ -10,7 +10,8 @@ import {
   IssuesPage,
   InvestigatePage,
   BlogsPage,
-  AboutUsPage
+  AboutUsPage,
+  SearchPage
 } from '../pages'
 
 // App Router
@@ -37,6 +38,8 @@ class RoutedApplication extends React.Component {
           <Route path='/blogs' component={BlogsPage} />
 
           <Route path='/about-us' component={AboutUsPage} />
+
+          <Route path='/search' component={SearchPage}/>
         </Switch>
 
         <footer className="py-5">

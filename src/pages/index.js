@@ -6,6 +6,7 @@ import IssuesPage from './Issues'
 import InvestigatePage from './Investigate'
 import BlogsPage from './Blogs'
 import AboutUsPage from './AboutUs'
+import SearchPage from './Search'
 
 export {
   BrowsePage,
@@ -15,5 +16,6 @@ export {
   IssuesPage,
   BlogsPage,
   AboutUsPage,
-  InvestigatePage
+  InvestigatePage,
+  SearchPage
 };
