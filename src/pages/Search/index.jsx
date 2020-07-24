@@ -1,6 +1,25 @@
 import React from "react"
 import { Container, Row, Col, Dropdown, Form, Button, ButtonGroup, ToggleButton } from "react-bootstrap"
 import "./style.scss"
+import { PoliticiansVisualization } from '../../components'
+
+// default form data for state
+const defaultFormData = {
+  lawFormData: {
+    titleOrNumber: "",
+    startedIn: "",
+    yearPassed: "",
+    committe: ""
+  },
+  politicianFormData: {
+    name: "",
+    state: "",
+    houseSenate: "",
+    party: "DEM",
+    federalState: "",
+    currentlyInOffice: false
+  }
+}
 
 class Search extends React.Component {
   constructor(props) {
@@ -8,11 +27,10 @@ class Search extends React.Component {
 
     // states of the search page
     this.state = {
-      searchType: "Find Politician",
-      lawFormData: {},
-      politicianFormData: {
-        politicianType: "Democrat"
-      }
+      loading: false,
+      searchType: "Find Law",
+      searchResults: [],
+      ...defaultFormData
     }
   }
 
@@ -53,45 +71,72 @@ class Search extends React.Component {
 
   // find politician form
   renderFindPoliticianForm = () => {
-    const radios = ["Democrat", "Other", "Republician"]
+    const parties = {
+      "DEM": "Democratic",
+      "OTH": "Other",
+      "REP": "Republician"
+    }
     const { politicianFormData } = this.state
 
     return (
       <Form onSubmit={this.submitForm}>
         <Form.Group controlId="name">
-          <Form.Control type="text" placeholder="Name" required />
+          <Form.Control type="text" placeholder="Name" required value={politicianFormData.name}
+            onChange={e => {
+              politicianFormData.name = e.target.value
+              this.setState({ politicianFormData })
+            }}
+          />
         </Form.Group>
 
         <Form.Group controlId="state">
-          <Form.Control type="text" placeholder="State" required />
+          <Form.Control type="text" placeholder="State" required value={politicianFormData.state}
+            onChange={e => {
+              politicianFormData.state = e.target.value
+              this.setState({ politicianFormData })
+            }}
+          />
         </Form.Group>
 
         <Form.Group controlId="house-or-senate">
-          <Form.Control type="text" placeholder="House / Senate" required />
+          <Form.Control type="text" placeholder="House / Senate" required value={politicianFormData.houseSenate}
+            onChange={e => {
+              politicianFormData.houseSenate = e.target.value
+              this.setState({ politicianFormData })
+            }}
+          />
         </Form.Group>
 
         <Form.Group>
           <ButtonGroup toggle id="politican-type">
-            {radios.map((radio, idx) => (
+            {Object.keys(parties).map((party, idx) => (
               <ToggleButton key={idx} type="radio" name="radio"
-                value={radio} checked={politicianFormData.politicianType === radio}
+                value={party} checked={politicianFormData.party === party}
                 onChange={e => {
-                  politicianFormData.politicianType = e.target.value
+                  politicianFormData.party = e.target.value
                   this.setState({ politicianFormData })
                 }}
               >
-                {radio}
+                {parties[party]}
               </ToggleButton>
             ))}
           </ButtonGroup>
         </Form.Group>
 
         <Form.Group controlId="federal_or_state">
-          <Form.Control type="text" placeholder="Federal / State" required />
+          <Form.Control type="text" placeholder="Federal / State" required value={politicianFormData.federalState}
+            onChange={e => {
+              politicianFormData.federalState = e.target.value
+              this.setState({ politicianFormData })
+            }} />
         </Form.Group>
 
         <Form.Group controlId="currently_in_office">
-          <Form.Check custom type="checkbox" name="currently_in_office" label="Currently in office" />
+          <Form.Check custom type="checkbox" name="currently_in_office" label="Currently in office" checked={politicianFormData.currentlyInOffice}
+            onChange={e => {
+              politicianFormData.currentlyInOffice = !politicianFormData.currentlyInOffice
+              this.setState({ politicianFormData })
+            }} />
         </Form.Group>
 
         <Button id="submit" type="submit" className="w-100">Submit</Button>
@@ -126,11 +171,54 @@ class Search extends React.Component {
   submitForm = (e) => {
     e.preventDefault()
 
-    const { searchType } = this.state
+    const { searchType, politicianFormData } = this.state
+    let res_status = null
 
     switch (searchType) {
       case "Find Donor":
         alert("This feature has been implemented yet.")
+        break
+
+      case "Find Politician":
+        const isActiveCandidate = politicianFormData.currentlyInOffice ? { is_active_candidate: true } : {}
+
+        const params = {
+          name: politicianFormData.name,
+          state: politicianFormData.state,
+          party: politicianFormData.party,
+          ...isActiveCandidate
+        }
+
+        this.setState({ loading: true })
+
+        new Promise(
+          (resolve) => fetch(process.env.REACT_APP_API_ENDPOINT + '/candidates/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+          }).then(res => {
+            res_status = res.status
+            if (res.status !== 200)
+              resolve(res.text())
+            else
+              resolve(res.json())
+          })
+        ).then(response => {
+          this.setState({ searchResults: [] })
+
+          if (res_status === 200) {
+            this.setState({ searchResults: response })
+          } else {
+            alert("Unknown issue")
+          }
+
+          this.setState({ loading: false })
+        })
+
+        break
+
+      default:
+        break
     }
   }
 
@@ -151,7 +239,7 @@ class Search extends React.Component {
 
   // render page
   render() {
-    const { searchType } = this.state
+    const { searchType, searchResults, loading } = this.state
 
     return (
       <Container className="search-page">
@@ -163,9 +251,17 @@ class Search extends React.Component {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item className="text-center" onClick={() => this.setState({ searchType: "Find Law" })}>Find Law</Dropdown.Item>
-                <Dropdown.Item className="text-center" onClick={() => this.setState({ searchType: "Find Politician" })}>Find Politician</Dropdown.Item>
-                <Dropdown.Item className="text-center" onClick={() => this.setState({ searchType: "Find Donor" })}>Find Donor</Dropdown.Item>
+                <Dropdown.Item className="text-center"
+                  onClick={() => this.setState({ searchType: "Find Law", ...defaultFormData })}
+                >Find Law</Dropdown.Item>
+
+                <Dropdown.Item className="text-center"
+                  onClick={() => this.setState({ searchType: "Find Politician", ...defaultFormData })}
+                >Find Politician</Dropdown.Item>
+
+                <Dropdown.Item className="text-center"
+                  onClick={() => this.setState({ searchType: "Find Donor", ...defaultFormData })}
+                >Find Donor</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -176,6 +272,15 @@ class Search extends React.Component {
             {this.renderSearchForm(searchType)}
           </Col>
         </Row>
+
+        {searchResults.length ? (
+          <Row>
+            <Col>
+              <PoliticiansVisualization loading={loading} visData={searchResults} height={500} bgColor="#270262" title="Politican Search Results" />
+            </Col>
+          </Row>
+        ) : null}
+
       </Container>
     )
   }

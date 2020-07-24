@@ -22,4 +22,21 @@ router.get('/search', async (req, res) => {
   res.status(200).send(_candidates)
 })
 
+// api endpoint for search politicans
+router.post('/search', async (req, res) => {
+  const params = {
+    ...req.body,
+    api_key: API_KEY,
+    per_page: 10
+  }
+
+  // send request to openfec
+  let _politicians = await axios.get(API_ENDPOINT + '/search', { params }).then(response => {
+    return response.data.results
+  }).catch(() => [])
+
+  // return data to the frontend
+  res.status(200).send(_politicians)
+})
+
 module.exports = router
